@@ -1,5 +1,6 @@
 package store.kirinit.communityfeed.domain.user;
 
+// VO 활용
 public class UserInfo {
     private final String name;
     private final String profileImageUrl;

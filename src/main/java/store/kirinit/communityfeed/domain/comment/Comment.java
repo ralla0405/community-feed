@@ -2,18 +2,18 @@ package store.kirinit.communityfeed.domain.comment;
 
 import java.time.LocalDateTime;
 import store.kirinit.communityfeed.domain.like.Like;
+import store.kirinit.communityfeed.domain.post.content.CommentContent;
 import store.kirinit.communityfeed.domain.user.User;
 
 public class Comment {
-    private String content;
+    private final CommentContent content;
     private final User writer;
     private final Like like;
     private boolean isUpdated;
     private LocalDateTime updatedAt;
 
     public Comment(String content, User writer) {
-        checkContent(content);
-        this.content = content;
+        this.content = new CommentContent(content);
         this.writer = writer;
         this.like = new Like();
         this.isUpdated = false;
@@ -21,7 +21,7 @@ public class Comment {
     }
 
     public String getContent() {
-        return content;
+        return content.getContentText();
     }
 
     public String getWriterUserName() {
@@ -56,16 +56,9 @@ public class Comment {
         if (!writer.equals(user)) {
             throw new IllegalArgumentException("댓글 작성자만 수정할 수 있습니다.");
         }
-        checkContent(content);
-        this.content = content;
+        this.content.changeContent(content);
         this.isUpdated = true;
         this.updatedAt = LocalDateTime.now();
-    }
-
-    private void checkContent(String content) {
-        if (content.length() > 100) {
-            throw new IllegalArgumentException("댓글 내용은 100자 이하로 입력해주세요.");
-        }
     }
 
 }

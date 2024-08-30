@@ -2,22 +2,22 @@ package store.kirinit.communityfeed.domain.user;
 
 import java.util.List;
 import java.util.Objects;
-import store.kirinit.communityfeed.domain.feed.Feed;
-import store.kirinit.communityfeed.domain.feed.FeedList;
+import store.kirinit.communityfeed.domain.post.Post;
+import store.kirinit.communityfeed.domain.post.PostList;
 
 public class User {
     private final Long id;
     private final UserInfo info;
     private final UserFollow followers;
     private final UserFollow followings;
-    private final FeedList feeds;
+    private final PostList feeds;
 
     public User(Long id, UserInfo userInfo) {
         this.id = id;
         this.info = userInfo;
         this.followers = new UserFollow();
         this.followings = new UserFollow();
-        this.feeds = new FeedList();
+        this.feeds = new PostList();
     }
 
     public Long getId() {
@@ -80,8 +80,8 @@ public class User {
         user.removeFollower(this);
     }
 
-    public List<Feed> getFeeds() {
-        return feeds.getFeeds();
+    public List<Post> getFeeds() {
+        return feeds.getPosts();
     }
 
 
