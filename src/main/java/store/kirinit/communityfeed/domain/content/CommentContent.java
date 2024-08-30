@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.domain.post.content;
+package store.kirinit.communityfeed.domain.content;
 
 public class CommentContent extends Content {
 

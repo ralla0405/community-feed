@@ -6,32 +6,27 @@ import java.util.Objects;
 import store.kirinit.communityfeed.domain.comment.Comment;
 import store.kirinit.communityfeed.domain.comment.CommentList;
 import store.kirinit.communityfeed.domain.like.Like;
-import store.kirinit.communityfeed.domain.post.content.PostContent;
+import store.kirinit.communityfeed.domain.content.PostContent;
 import store.kirinit.communityfeed.domain.user.User;
 
 public class Post {
     private final Long id;
     private final PostContent content;
-    // 공개 대상(모두 공개, 팔로워 전용)을 설정
-    private final boolean isPublic;
+    private PostState state;
     private final User writer;
     private final Like like;
     private final CommentList comments;
-    private boolean isUpdated;
-    private LocalDateTime updatedAt;
 
-    public Post(Long id, PostContent content, boolean isPublic, User writer) {
+    public Post(Long id, PostContent content, User writer) {
         if (writer == null) {
             throw new IllegalArgumentException("작성자가 없습니다.");
         }
         this.id = id;
         this.content = content;
-        this.isPublic = isPublic;
+        this.state = PostState.PUBLIC;
         this.writer = writer;
         this.like = new Like();
         this.comments = new CommentList();
-        this.isUpdated = false;
-        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -42,8 +37,8 @@ public class Post {
         return content.getContentText();
     }
 
-    public boolean isPublic() {
-        return isPublic;
+    public String getState() {
+        return state.name();
     }
 
     public String getWriterUserName() {
@@ -86,20 +81,19 @@ public class Post {
     }
 
     public boolean isUpdated() {
-        return isUpdated;
+        return content.isEdited();
     }
 
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return content.getUpdatedDateTime();
     }
 
-    public void changeContent(User user, String content) {
-        if (!writer.equals(user)) {
+    public void changePost(User user, String content, PostState state) {
+        if (!this.writer.equals(user)) {
             throw new IllegalArgumentException("피드 작성자만 수정할 수 있습니다.");
         }
+        this.state = state;
         this.content.changeContent(content);
-        this.isUpdated = true;
-        this.updatedAt = LocalDateTime.now();
     }
 
     @Override

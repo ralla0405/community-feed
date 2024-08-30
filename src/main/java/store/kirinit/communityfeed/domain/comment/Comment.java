@@ -3,7 +3,7 @@ package store.kirinit.communityfeed.domain.comment;
 import java.time.LocalDateTime;
 import store.kirinit.communityfeed.domain.like.Like;
 import store.kirinit.communityfeed.domain.post.Post;
-import store.kirinit.communityfeed.domain.post.content.CommentContent;
+import store.kirinit.communityfeed.domain.content.CommentContent;
 import store.kirinit.communityfeed.domain.user.User;
 
 public class Comment {
@@ -12,8 +12,6 @@ public class Comment {
     private final User writer;
     private final Post post;
     private final Like like;
-    private boolean isUpdated;
-    private LocalDateTime updatedAt;
 
     public Comment(Long id, Post post, User writer, CommentContent content) {
         if (post == null) {
@@ -27,8 +25,6 @@ public class Comment {
         this.content = content;
         this.writer = writer;
         this.like = new Like();
-        this.isUpdated = false;
-        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -56,11 +52,11 @@ public class Comment {
     }
 
     public boolean isUpdated() {
-        return isUpdated;
+        return content.isEdited();
     }
 
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return content.getUpdatedDateTime();
     }
 
     public int incrementAndGetLikeCount(User user) {
@@ -76,8 +72,6 @@ public class Comment {
             throw new IllegalArgumentException("댓글 작성자만 수정할 수 있습니다.");
         }
         this.content.changeContent(content);
-        this.isUpdated = true;
-        this.updatedAt = LocalDateTime.now();
     }
 
 }
