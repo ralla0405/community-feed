@@ -1,26 +1,22 @@
 package store.kirinit.communityfeed.domain.user;
 
 import java.util.List;
+import java.util.Objects;
 import store.kirinit.communityfeed.domain.feed.Feed;
 import store.kirinit.communityfeed.domain.feed.FeedList;
 
 public class User {
     private final Long id;
-    private final String userName;
-    private final ProfileImageVo profileImageUrl;
-    private final FollowerList followers;
-    private final FollowingList followings;
+    private final UserInfo info;
+    private final UserFollow followers;
+    private final UserFollow followings;
     private final FeedList feeds;
 
-    public User(Long id, String userName, String profileImageUrl) {
-        if (id == null) {
-            throw new IllegalArgumentException("id는 필수 입력값입니다.");
-        }
+    public User(Long id, UserInfo userInfo) {
         this.id = id;
-        this.userName = checkUserName(userName);
-        this.profileImageUrl = new ProfileImageVo(profileImageUrl);
-        this.followers = new FollowerList();
-        this.followings = new FollowingList();
+        this.info = userInfo;
+        this.followers = new UserFollow();
+        this.followings = new UserFollow();
         this.feeds = new FeedList();
     }
 
@@ -29,58 +25,80 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return info.getName();
     }
 
     public String getProfileImageUrl() {
-        return profileImageUrl.profileImageUrl();
+        return info.getProfileImageUrl();
     }
 
     public int getFollowerCount() {
-        return followers.getFollowerCount();
+        return followers.getFollowCount();
     }
 
     public List<User> getFollowers() {
-        return followers.getFollowers();
+        return followers.getFollows();
     }
 
     public int getFollowingCount() {
-        return followings.getFollowingCount();
+        return followings.getFollowCount();
+    }
+
+    public List<User> getFollowings() {
+        return followings.getFollows();
+    }
+
+    private void addFollower(User user) {
+        this.followers.addFollow(user);
+    }
+
+    private void removeFollower(User user) {
+        this.followers.removeFollow(user);
+    }
+
+    private void addFollowing(User user) {
+        this.followings.addFollow(user);
+    }
+
+    private void removeFollowing(User user) {
+        this.followings.removeFollow(user);
     }
 
     public void follow(User user) {
         if (user.equals(this)) {
             throw new IllegalArgumentException("자신을 팔로우할 수 없습니다.");
         }
-        followings.addFollowing(user);
-        user.followers.addFollower(this);
+        this.addFollowing(user);
+        user.addFollower(this);
     }
 
     public void unfollow(User user) {
         if (user.equals(this)) {
             throw new IllegalArgumentException("자신을 언팔로우할 수 없습니다.");
         }
-        followings.removeFollowing(user);
-        user.followers.removeFollower(this);
-    }
-
-    public List<User> getFollowings() {
-        return followings.getFollowings();
+        this.removeFollowing(user);
+        user.removeFollower(this);
     }
 
     public List<Feed> getFeeds() {
         return feeds.getFeeds();
     }
 
-    public void changeProfileImage(String profileImageUrl) {
-        this.profileImageUrl.changeProfileImageUrl(profileImageUrl);
-    }
 
-    private String checkUserName(String userName) {
-        if (userName == null || userName.isEmpty()) {
-            throw new IllegalArgumentException("userName은 필수 입력값입니다.");
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return userName;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
