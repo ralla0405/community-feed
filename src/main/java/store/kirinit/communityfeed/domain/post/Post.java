@@ -1,14 +1,17 @@
-package store.kirinit.communityfeed.domain.feed;
+package store.kirinit.communityfeed.domain.post;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import store.kirinit.communityfeed.domain.comment.Comment;
 import store.kirinit.communityfeed.domain.comment.CommentList;
 import store.kirinit.communityfeed.domain.like.Like;
+import store.kirinit.communityfeed.domain.post.content.PostContent;
 import store.kirinit.communityfeed.domain.user.User;
 
-public class Feed {
-    private final FeedContent content;
+public class Post {
+    private final Long id;
+    private final PostContent content;
     // 공개 대상(모두 공개, 팔로워 전용)을 설정
     private final boolean isPublic;
     private final User writer;
@@ -17,7 +20,11 @@ public class Feed {
     private boolean isUpdated;
     private LocalDateTime updatedAt;
 
-    public Feed(FeedContent content, boolean isPublic, User writer) {
+    public Post(Long id, PostContent content, boolean isPublic, User writer) {
+        if (writer == null) {
+            throw new IllegalArgumentException("작성자가 없습니다.");
+        }
+        this.id = id;
         this.content = content;
         this.isPublic = isPublic;
         this.writer = writer;
@@ -27,8 +34,12 @@ public class Feed {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getContent() {
-        return content.getContent();
+        return content.getContentText();
     }
 
     public boolean isPublic() {
@@ -89,5 +100,22 @@ public class Feed {
         this.content.changeContent(content);
         this.isUpdated = true;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(id, post.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
