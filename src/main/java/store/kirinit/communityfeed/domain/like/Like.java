@@ -1,5 +1,6 @@
 package store.kirinit.communityfeed.domain.like;
 
+import java.util.ArrayList;
 import java.util.List;
 import store.kirinit.communityfeed.domain.user.User;
 
@@ -8,7 +9,7 @@ public class Like {
     private final List<User> likes;
 
     public Like() {
-        this(List.of());
+        this(new ArrayList<>());
     }
 
     public Like(List<User> users) {

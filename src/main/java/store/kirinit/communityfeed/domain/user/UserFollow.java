@@ -1,5 +1,6 @@
 package store.kirinit.communityfeed.domain.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserFollow {
@@ -7,7 +8,7 @@ public class UserFollow {
     private final List<User> follows;
 
     public UserFollow() {
-        this(List.of());
+        this(new ArrayList<>());
     }
 
     public UserFollow(List<User> follows) {

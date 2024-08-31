@@ -1,13 +1,14 @@
 package store.kirinit.communityfeed.domain.post;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostList {
     private final List<Post> posts;
 
     public PostList() {
-        this(List.of());
+        this(new ArrayList<>());
     }
 
     public PostList(List<Post> posts) {
