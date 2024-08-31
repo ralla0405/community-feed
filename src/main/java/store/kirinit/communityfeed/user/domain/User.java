@@ -24,6 +24,10 @@ public class User {
         return id;
     }
 
+    public UserInfo getInfo() {
+        return info;
+    }
+
     public String getUserName() {
         return info.getName();
     }
