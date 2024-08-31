@@ -1,6 +1,6 @@
-package store.kirinit.communityfeed.application.user.dto;
+package store.kirinit.communityfeed.user.application.dto;
 
-import store.kirinit.communityfeed.domain.user.User;
+import store.kirinit.communityfeed.user.domain.User;
 
 public class ProfileInfoDto {
     private final Long id;

@@ -1,7 +1,7 @@
-package store.kirinit.communityfeed.domain.content;
+package store.kirinit.communityfeed.post.domain.content;
 
 import java.time.LocalDateTime;
-import store.kirinit.communityfeed.domain.common.DatetimeInfo;
+import store.kirinit.communityfeed.post.domain.common.DatetimeInfo;
 
 // 다형성 활용
 public abstract class Content {

@@ -1,9 +1,9 @@
-package store.kirinit.communityfeed.domain.user;
+package store.kirinit.communityfeed.user.domain;
 
 import java.util.List;
 import java.util.Objects;
-import store.kirinit.communityfeed.domain.post.Post;
-import store.kirinit.communityfeed.domain.post.PostList;
+import store.kirinit.communityfeed.post.domain.Post;
+import store.kirinit.communityfeed.post.domain.PostList;
 
 public class User {
     private final Long id;

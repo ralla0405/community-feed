@@ -1,10 +1,10 @@
-package store.kirinit.communityfeed.domain.comment;
+package store.kirinit.communityfeed.post.domain.comment;
 
 import java.time.LocalDateTime;
-import store.kirinit.communityfeed.domain.like.Like;
-import store.kirinit.communityfeed.domain.post.Post;
-import store.kirinit.communityfeed.domain.content.CommentContent;
-import store.kirinit.communityfeed.domain.user.User;
+import store.kirinit.communityfeed.post.domain.like.Like;
+import store.kirinit.communityfeed.post.domain.Post;
+import store.kirinit.communityfeed.post.domain.content.CommentContent;
+import store.kirinit.communityfeed.user.domain.User;
 
 public class Comment {
     private final Long id;

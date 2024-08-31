@@ -1,13 +1,13 @@
-package store.kirinit.communityfeed.domain.post;
+package store.kirinit.communityfeed.post.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import store.kirinit.communityfeed.domain.comment.Comment;
-import store.kirinit.communityfeed.domain.comment.CommentList;
-import store.kirinit.communityfeed.domain.like.Like;
-import store.kirinit.communityfeed.domain.content.PostContent;
-import store.kirinit.communityfeed.domain.user.User;
+import store.kirinit.communityfeed.post.domain.comment.Comment;
+import store.kirinit.communityfeed.post.domain.comment.CommentList;
+import store.kirinit.communityfeed.post.domain.like.Like;
+import store.kirinit.communityfeed.post.domain.content.PostContent;
+import store.kirinit.communityfeed.user.domain.User;
 
 public class Post {
     private final Long id;

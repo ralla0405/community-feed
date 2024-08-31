@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.domain.user;
+package store.kirinit.communityfeed.user.domain;
 
 // VO 활용
 public class UserInfo {

@@ -1,8 +1,8 @@
-package store.kirinit.communityfeed.domain.like;
+package store.kirinit.communityfeed.post.domain.like;
 
 import java.util.ArrayList;
 import java.util.List;
-import store.kirinit.communityfeed.domain.user.User;
+import store.kirinit.communityfeed.user.domain.User;
 
 public class Like {
 

@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.domain.post;
+package store.kirinit.communityfeed.post.domain;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.domain.common;
+package store.kirinit.communityfeed.post.domain.common;
 
 import java.time.LocalDateTime;
 

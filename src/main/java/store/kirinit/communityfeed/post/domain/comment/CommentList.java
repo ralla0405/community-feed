@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.domain.comment;
+package store.kirinit.communityfeed.post.domain.comment;
 
 import java.util.ArrayList;
 import java.util.List;
