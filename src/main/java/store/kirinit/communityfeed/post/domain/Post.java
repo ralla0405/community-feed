@@ -41,6 +41,14 @@ public class Post {
         return id;
     }
 
+    public User getWriter() {
+        return writer;
+    }
+
+    public Content getContentObject() {
+        return content;
+    }
+
     public String getContent() {
         return content.getContentText();
     }

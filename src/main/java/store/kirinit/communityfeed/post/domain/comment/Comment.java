@@ -18,7 +18,7 @@ public class Comment {
         return new Comment(null, post, writer, new CommentContent(content));
     }
 
-    public Comment(Long id, Post post, User writer, CommentContent content) {
+    public Comment(Long id, Post post, User writer, Content content) {
         if (post == null) {
             throw new IllegalArgumentException("게시글이 없습니다.");
         }
@@ -32,8 +32,16 @@ public class Comment {
         this.likeCount = new PositiveIntegerCounter();
     }
 
+    public User getWriter() {
+        return writer;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public Content getContentObject() {
+        return content;
     }
 
     public String getContent() {
