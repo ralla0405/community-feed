@@ -5,8 +5,8 @@ import store.kirinit.communityfeed.post.domain.common.DatetimeInfo;
 
 // 다형성 활용
 public abstract class Content {
-    String contentText;
-    final DatetimeInfo datetimeInfo;
+    protected String contentText;
+    protected final DatetimeInfo datetimeInfo;
 
     protected Content(String contentText) {
         checkText(contentText);

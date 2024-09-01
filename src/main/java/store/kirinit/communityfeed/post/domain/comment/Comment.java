@@ -60,10 +60,16 @@ public class Comment {
     }
 
     public int incrementAndGetLikeCount(User user) {
+        if (writer.equals(user)) {
+            throw new IllegalArgumentException("자신의 댓글에는 좋아요를 누를 수 없습니다.");
+        }
         return like.incrementAndGetLikeCount(user);
     }
 
     public int decrementAndGetLikeCount(User user) {
+        if (writer.equals(user)) {
+            throw new IllegalArgumentException("자신의 댓글에는 좋아요를 취소할 수 없습니다.");
+        }
         return like.decrementAndGetLikeCount(user);
     }
 

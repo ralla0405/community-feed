@@ -4,7 +4,7 @@ public class CommentContent extends Content {
 
     private static final int MAX_COMMENT_LENGTH = 100;
 
-    protected CommentContent(String contentText) {
+    public CommentContent(String contentText) {
         super(contentText);
     }
 
