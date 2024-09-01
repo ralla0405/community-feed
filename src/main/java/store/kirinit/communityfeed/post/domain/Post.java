@@ -3,23 +3,36 @@ package store.kirinit.communityfeed.post.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
+import store.kirinit.communityfeed.post.domain.content.Content;
 import store.kirinit.communityfeed.post.domain.content.PostContent;
 import store.kirinit.communityfeed.user.domain.User;
 
 public class Post {
     private final Long id;
     private final User writer;
-    private final PostContent content;
+    private final Content content;
     private PostState state;
     private final PositiveIntegerCounter likeCount;
 
-    public Post(Long id, PostContent content, User writer) {
+    public static Post createPost(Long id, User writer, String content, PostState state) {
+        return new Post(id, new PostContent(content), writer, state);
+    }
+
+    public static Post createDefaultPost(Long id, User writer, String content) {
+        return new Post(id, new PostContent(content), writer, PostState.PUBLIC);
+    }
+
+    public Post(Long id, Content content, User writer) {
+        this(id, content, writer, PostState.PUBLIC);
+    }
+
+    public Post(Long id, Content content, User writer, PostState state) {
         if (writer == null) {
             throw new IllegalArgumentException("작성자가 없습니다.");
         }
         this.id = id;
         this.content = content;
-        this.state = PostState.PUBLIC;
+        this.state = state;
         this.writer = writer;
         this.likeCount = new PositiveIntegerCounter();
     }

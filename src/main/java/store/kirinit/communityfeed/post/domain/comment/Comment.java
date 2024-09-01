@@ -4,14 +4,19 @@ import java.time.LocalDateTime;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.post.domain.Post;
 import store.kirinit.communityfeed.post.domain.content.CommentContent;
+import store.kirinit.communityfeed.post.domain.content.Content;
 import store.kirinit.communityfeed.user.domain.User;
 
 public class Comment {
     private final Long id;
     private final Post post;
     private final User writer;
-    private final CommentContent content;
+    private final Content content;
     private final PositiveIntegerCounter likeCount;
+
+    public static Comment createComment(Post post, User writer, String content) {
+        return new Comment(null, post, writer, new CommentContent(content));
+    }
 
     public Comment(Long id, Post post, User writer, CommentContent content) {
         if (post == null) {
