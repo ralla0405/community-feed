@@ -1,23 +1,19 @@
 package store.kirinit.communityfeed.user.domain;
 
-import java.util.List;
 import java.util.Objects;
-import store.kirinit.communityfeed.post.domain.Post;
-import store.kirinit.communityfeed.post.domain.PostList;
+import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 
 public class User {
     private final Long id;
     private final UserInfo info;
-    private final UserFollow followers;
-    private final UserFollow followings;
-    private final PostList feeds;
+    private final PositiveIntegerCounter followerCount;
+    private final PositiveIntegerCounter followingCount;
 
     public User(Long id, UserInfo userInfo) {
         this.id = id;
         this.info = userInfo;
-        this.followers = new UserFollow();
-        this.followings = new UserFollow();
-        this.feeds = new PostList();
+        this.followerCount = new PositiveIntegerCounter();
+        this.followingCount = new PositiveIntegerCounter();
     }
 
     public Long getId() {
@@ -36,58 +32,39 @@ public class User {
         return info.getProfileImageUrl();
     }
 
-    public int getFollowerCount() {
-        return followers.getFollowCount();
+    public void follow(User followee) {
+        if (this.equals(followee)) {
+            throw new IllegalArgumentException("");
+        }
+
+        followingCount.increase();
+        followee.increaseFollowerCount();
     }
 
-    public List<User> getFollowers() {
-        return followers.getFollows();
+    public void unfollow(User followee) {
+        if (this.equals(followee)) {
+            throw new IllegalArgumentException("");
+        }
+
+        followingCount.decrease();
+        followee.decreaseFollowerCount();
+    }
+
+    private void increaseFollowerCount() {
+        followerCount.increase();
+    }
+
+    private void decreaseFollowerCount() {
+        followerCount.decrease();
     }
 
     public int getFollowingCount() {
-        return followings.getFollowCount();
+        return followingCount.getCount();
     }
 
-    public List<User> getFollowings() {
-        return followings.getFollows();
+    public int getFollowerCount() {
+        return followerCount.getCount();
     }
-
-    private void addFollower(User user) {
-        this.followers.addFollow(user);
-    }
-
-    private void removeFollower(User user) {
-        this.followers.removeFollow(user);
-    }
-
-    private void addFollowing(User user) {
-        this.followings.addFollow(user);
-    }
-
-    private void removeFollowing(User user) {
-        this.followings.removeFollow(user);
-    }
-
-    public void follow(User user) {
-        if (user.equals(this)) {
-            throw new IllegalArgumentException("자신을 팔로우할 수 없습니다.");
-        }
-        this.addFollowing(user);
-        user.addFollower(this);
-    }
-
-    public void unfollow(User user) {
-        if (user.equals(this)) {
-            throw new IllegalArgumentException("자신을 언팔로우할 수 없습니다.");
-        }
-        this.removeFollowing(user);
-        user.removeFollower(this);
-    }
-
-    public List<Post> getFeeds() {
-        return feeds.getPosts();
-    }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,21 +1,17 @@
 package store.kirinit.communityfeed.post.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
-import store.kirinit.communityfeed.post.domain.comment.Comment;
-import store.kirinit.communityfeed.post.domain.comment.CommentList;
-import store.kirinit.communityfeed.post.domain.like.Like;
+import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.post.domain.content.PostContent;
 import store.kirinit.communityfeed.user.domain.User;
 
 public class Post {
     private final Long id;
+    private final User writer;
     private final PostContent content;
     private PostState state;
-    private final User writer;
-    private final Like like;
-    private final CommentList comments;
+    private final PositiveIntegerCounter likeCount;
 
     public Post(Long id, PostContent content, User writer) {
         if (writer == null) {
@@ -25,8 +21,7 @@ public class Post {
         this.content = content;
         this.state = PostState.PUBLIC;
         this.writer = writer;
-        this.like = new Like();
-        this.comments = new CommentList();
+        this.likeCount = new PositiveIntegerCounter();
     }
 
     public Long getId() {
@@ -50,34 +45,18 @@ public class Post {
     }
 
     public int getLikeCount() {
-        return like.getLikeCount();
+        return likeCount.getCount();
     }
 
-    public int incrementAndGetLikeCount(User user) {
+    public void like(User user) {
         if (writer.equals(user)) {
-            throw new IllegalArgumentException("자신의 피드에는 좋아요를 누를 수 없습니다.");
+            throw new IllegalArgumentException("자기글에 좋아요할 수 없습니다.");
         }
-        return like.incrementAndGetLikeCount(user);
+        likeCount.increase();
     }
 
-    public int decrementAndGetLikeCount(User user) {
-        return like.decrementAndGetLikeCount(user);
-    }
-
-    public List<User> getLikes() {
-        return like.getLikes();
-    }
-
-    public int getCommentCount() {
-        return comments.getCommentCount();
-    }
-
-    public List<Comment> getComments() {
-        return comments.getComments();
-    }
-
-    public void addComment(Comment comment) {
-        comments.addComment(comment);
+    public void unlike() {
+        likeCount.decrease();
     }
 
     public boolean isUpdated() {

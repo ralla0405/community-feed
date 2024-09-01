@@ -18,7 +18,7 @@ class PostTest {
     void 게시글_좋아요_테스트() throws Exception {
         // given
         // when
-        post.incrementAndGetLikeCount(otherUser);
+        post.like(otherUser);
 
         // then
         assertEquals(1, post.getLikeCount());
@@ -29,16 +29,16 @@ class PostTest {
         // given
         // when
         // then
-        assertThrows(IllegalArgumentException.class, () ->  post.incrementAndGetLikeCount(user));
+        assertThrows(IllegalArgumentException.class, () ->  post.like(user));
     }
 
     @Test
     void 게시글_좋아요_취소_테스트() throws Exception {
         // given
-        post.incrementAndGetLikeCount(otherUser);
+        post.like(otherUser);
 
         // when
-        post.decrementAndGetLikeCount(otherUser);
+        post.unlike();
 
         // then
         assertEquals(0, post.getLikeCount());
@@ -48,8 +48,9 @@ class PostTest {
     void 게시글_좋아요_취소_실패_테스트() throws Exception {
         // given
         // when
+        post.unlike();
         // then
-        assertThrows(IllegalArgumentException.class, () -> post.decrementAndGetLikeCount(otherUser));
+        assertEquals(0, post.getLikeCount());
     }
 
     @Test

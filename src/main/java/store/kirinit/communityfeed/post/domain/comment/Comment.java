@@ -1,17 +1,17 @@
 package store.kirinit.communityfeed.post.domain.comment;
 
 import java.time.LocalDateTime;
-import store.kirinit.communityfeed.post.domain.like.Like;
+import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.post.domain.Post;
 import store.kirinit.communityfeed.post.domain.content.CommentContent;
 import store.kirinit.communityfeed.user.domain.User;
 
 public class Comment {
     private final Long id;
-    private final CommentContent content;
-    private final User writer;
     private final Post post;
-    private final Like like;
+    private final User writer;
+    private final CommentContent content;
+    private final PositiveIntegerCounter likeCount;
 
     public Comment(Long id, Post post, User writer, CommentContent content) {
         if (post == null) {
@@ -22,9 +22,9 @@ public class Comment {
         }
         this.id = id;
         this.post = post;
-        this.content = content;
         this.writer = writer;
-        this.like = new Like();
+        this.content = content;
+        this.likeCount = new PositiveIntegerCounter();
     }
 
     public Long getId() {
@@ -48,7 +48,7 @@ public class Comment {
     }
 
     public int getLikeCount() {
-        return like.getLikeCount();
+        return likeCount.getCount();
     }
 
     public boolean isUpdated() {
@@ -59,18 +59,15 @@ public class Comment {
         return content.getUpdatedDateTime();
     }
 
-    public int incrementAndGetLikeCount(User user) {
+    public void like(User user) {
         if (writer.equals(user)) {
-            throw new IllegalArgumentException("자신의 댓글에는 좋아요를 누를 수 없습니다.");
+            throw new IllegalArgumentException("자기글에 좋아요할 수 없습니다.");
         }
-        return like.incrementAndGetLikeCount(user);
+        likeCount.increase();
     }
 
-    public int decrementAndGetLikeCount(User user) {
-        if (writer.equals(user)) {
-            throw new IllegalArgumentException("자신의 댓글에는 좋아요를 취소할 수 없습니다.");
-        }
-        return like.decrementAndGetLikeCount(user);
+    public void unlike() {
+        likeCount.decrease();
     }
 
     public void changeContent(User user, String content) {

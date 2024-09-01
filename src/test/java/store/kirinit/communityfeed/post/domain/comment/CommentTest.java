@@ -21,7 +21,7 @@ class CommentTest {
     void 댓글_좋아요_테스트() throws Exception {
         // given
         // when
-        comment.incrementAndGetLikeCount(otherUser);
+        comment.like(otherUser);
 
         // then
         assertEquals(1, comment.getLikeCount());
@@ -32,35 +32,29 @@ class CommentTest {
         // given
         // when
         // then
-        assertThrows(IllegalArgumentException.class, () ->  comment.incrementAndGetLikeCount(user));
+        assertThrows(IllegalArgumentException.class, () ->  comment.like(user));
     }
 
-    @Test
-    void 자기글_싫어요_테스트() throws Exception {
-        // given
-        // when
-        // then
-        assertThrows(IllegalArgumentException.class, () ->  comment.decrementAndGetLikeCount(user));
-    }
 
     @Test
-    void 댓글_좋아요_취소_테스트() throws Exception {
+    void 댓글_좋아요_좋아요_취소_테스트() throws Exception {
         // given
-        comment.incrementAndGetLikeCount(otherUser);
+        comment.like(otherUser);
 
         // when
-        comment.decrementAndGetLikeCount(otherUser);
+        comment.unlike();
 
         // then
         assertEquals(0, comment.getLikeCount());
     }
 
     @Test
-    void 댓글_좋아요_취소_실패_테스트() throws Exception {
+    void 댓글_좋아요_취소_테스트() throws Exception {
         // given
         // when
+        comment.unlike();
         // then
-        assertThrows(IllegalArgumentException.class, () -> comment.decrementAndGetLikeCount(otherUser));
+        assertEquals(0, comment.getLikeCount());
     }
 
     @Test
