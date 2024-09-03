@@ -1,6 +1,9 @@
 package store.kirinit.communityfeed.user.domain;
 
+import lombok.Getter;
+
 // VO 활용
+@Getter
 public class UserInfo {
     private final String name;
     private final String profileImageUrl;
@@ -11,13 +14,5 @@ public class UserInfo {
         }
         this.name = name;
         this.profileImageUrl = profileImageUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
     }
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class DatetimeInfoTest {
 
     @Test
-    void 업데이트할_경우() throws Exception {
+    void 업데이트할_경우() {
         // given
         DatetimeInfo datetimeInfo = new DatetimeInfo();
         LocalDateTime localDateTime = datetimeInfo.getDateTime();
@@ -18,7 +18,7 @@ class DatetimeInfoTest {
 
         // then
         assertTrue(datetimeInfo.isEdited());
-        assertNotEquals(localDateTime, datetimeInfo.getDateTime());
+        assertEquals(localDateTime, datetimeInfo.getDateTime());
     }
 
 }

@@ -1,27 +1,28 @@
 package store.kirinit.communityfeed.user.domain;
 
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class User {
-    private final Long id;
-    private final UserInfo info;
-    private final PositiveIntegerCounter followerCount;
-    private final PositiveIntegerCounter followingCount;
+    private Long id;
+    private UserInfo info;
+    private PositiveIntegerCounter followerCount;
+    private PositiveIntegerCounter followingCount;
 
     public User(Long id, UserInfo userInfo) {
+        if (userInfo == null) {
+            throw new IllegalArgumentException();
+        }
         this.id = id;
         this.info = userInfo;
         this.followerCount = new PositiveIntegerCounter();
         this.followingCount = new PositiveIntegerCounter();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public UserInfo getInfo() {
-        return info;
     }
 
     public String getUserName() {

@@ -2,11 +2,17 @@ package store.kirinit.communityfeed.post.domain;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.post.domain.content.Content;
 import store.kirinit.communityfeed.post.domain.content.PostContent;
 import store.kirinit.communityfeed.user.domain.User;
 
+@Builder
+@Getter
+@AllArgsConstructor
 public class Post {
     private final Long id;
     private final User writer;
@@ -37,14 +43,6 @@ public class Post {
         this.likeCount = new PositiveIntegerCounter();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
     public Content getContentObject() {
         return content;
     }
@@ -53,7 +51,7 @@ public class Post {
         return content.getContentText();
     }
 
-    public String getState() {
+    public String getStateString() {
         return state.name();
     }
 
