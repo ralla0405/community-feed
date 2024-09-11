@@ -1,10 +1,13 @@
 package store.kirinit.communityfeed.user.application.service;
 
+import org.springframework.stereotype.Service;
 import store.kirinit.communityfeed.user.application.dto.CreateUserRequestDto;
+import store.kirinit.communityfeed.user.application.dto.GetUserResponseDto;
 import store.kirinit.communityfeed.user.application.interfaces.UserRepository;
 import store.kirinit.communityfeed.user.domain.User;
 import store.kirinit.communityfeed.user.domain.UserInfo;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
 
@@ -19,6 +22,11 @@ public class UserService {
     }
 
     public User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return userRepository.findById(id);
+    }
+
+    public GetUserResponseDto getUserProfile(Long id) {
+        User user = getUser(id);
+        return new GetUserResponseDto(user);
     }
 }

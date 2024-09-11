@@ -1,14 +1,19 @@
 package store.kirinit.communityfeed.user.application.service;
 
+import org.springframework.stereotype.Service;
 import store.kirinit.communityfeed.user.application.dto.FollowUserRequestDto;
 import store.kirinit.communityfeed.user.application.interfaces.UserRelationRepository;
 import store.kirinit.communityfeed.user.domain.User;
 
+@Service
 public class UserRelationService {
     private final UserService userService;
     private final UserRelationRepository userRelationRepository;
 
-    public UserRelationService(UserService userService, UserRelationRepository userRelationRepository) {
+    public UserRelationService(
+        UserService userService,
+        UserRelationRepository userRelationRepository
+    ) {
         this.userService = userService;
         this.userRelationRepository = userRelationRepository;
     }

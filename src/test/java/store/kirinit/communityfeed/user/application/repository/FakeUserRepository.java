@@ -2,7 +2,6 @@ package store.kirinit.communityfeed.user.application.repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import store.kirinit.communityfeed.user.application.interfaces.UserRepository;
 import store.kirinit.communityfeed.user.domain.User;
 
@@ -22,7 +21,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public User findById(Long id) {
+        return store.get(id);
     }
 }

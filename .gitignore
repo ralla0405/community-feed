@@ -8,6 +8,7 @@ gradlew.bat
 gradlew
 .idea/
 gradle
+src/main/generated
 ### STS ###
 .apt_generated
 .classpath
