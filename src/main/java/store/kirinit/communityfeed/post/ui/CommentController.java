@@ -1,6 +1,8 @@
 package store.kirinit.communityfeed.post.ui;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,8 @@ import store.kirinit.communityfeed.post.application.dto.CreateCommentRequestDto;
 import store.kirinit.communityfeed.post.application.dto.LikeRequestDto;
 import store.kirinit.communityfeed.post.application.dto.UpdateCommentRequestDto;
 import store.kirinit.communityfeed.post.domain.comment.Comment;
+import store.kirinit.communityfeed.post.repository.CommentQueryRepositoryImpl;
+import store.kirinit.communityfeed.post.ui.dto.GetContentResponseDto;
 
 @RestController
 @RequestMapping("/comments")
@@ -20,6 +24,7 @@ import store.kirinit.communityfeed.post.domain.comment.Comment;
 public class CommentController {
 
     private final CommentService commentService;
+    private final CommentQueryRepositoryImpl commentQueryRepositoryImpl;
 
     @PostMapping
     public Response<Long> createComment(@RequestBody CreateCommentRequestDto dto) {
@@ -46,5 +51,11 @@ public class CommentController {
     public Response<Void> unlikeComment(@RequestBody LikeRequestDto dto) {
         commentService.unlikeComment(dto);
         return Response.ok(null);
+    }
+
+    @GetMapping("/post/{postId}")
+    public Response<List<GetContentResponseDto>> getCommentList(@PathVariable(name = "postId") Long postId, Long userId, Long lastCommentId) {
+        List<GetContentResponseDto> result = commentQueryRepositoryImpl.getCommentList(postId, userId, lastCommentId);
+        return Response.ok(result);
     }
 }
