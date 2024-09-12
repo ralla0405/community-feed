@@ -2,7 +2,6 @@ package store.kirinit.communityfeed.post.application.repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import store.kirinit.communityfeed.post.application.interfaces.PostRepository;
 import store.kirinit.communityfeed.post.domain.Post;
 
@@ -22,7 +21,7 @@ public class FakePostRepository implements PostRepository {
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Post findById(Long id) {
+        return store.get(id);
     }
 }

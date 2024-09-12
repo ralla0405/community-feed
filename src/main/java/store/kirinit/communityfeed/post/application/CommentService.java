@@ -1,5 +1,6 @@
 package store.kirinit.communityfeed.post.application;
 
+import org.springframework.stereotype.Service;
 import store.kirinit.communityfeed.post.application.dto.CreateCommentRequestDto;
 import store.kirinit.communityfeed.post.application.dto.LikeRequestDto;
 import store.kirinit.communityfeed.post.application.dto.UpdateCommentRequestDto;
@@ -10,6 +11,7 @@ import store.kirinit.communityfeed.post.domain.comment.Comment;
 import store.kirinit.communityfeed.user.application.service.UserService;
 import store.kirinit.communityfeed.user.domain.User;
 
+@Service
 public class CommentService {
     private final CommentRepository commentRepository;
     private final UserService userService;
@@ -24,8 +26,7 @@ public class CommentService {
     }
 
     public Comment getComment(Long commentId) {
-        return commentRepository.findById(commentId)
-            .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
+        return commentRepository.findById(commentId);
     }
 
     public Comment createComment(CreateCommentRequestDto dto) {
@@ -36,8 +37,8 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(UpdateCommentRequestDto dto) {
-        Comment comment = getComment(dto.commentId());
+    public Comment updateComment(Long commentId, UpdateCommentRequestDto dto) {
+        Comment comment = getComment(commentId);
         User user = userService.getUser(dto.userId());
         comment.changeContent(user, dto.content());
         return commentRepository.save(comment);

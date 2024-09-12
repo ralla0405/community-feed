@@ -4,16 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.common.repository.entity.TimeBaseEntity;
-import store.kirinit.communityfeed.post.repository.entity.post.PostEntity;
 import store.kirinit.communityfeed.user.domain.User;
 import store.kirinit.communityfeed.user.domain.UserInfo;
 
@@ -31,9 +28,6 @@ public class UserEntity extends TimeBaseEntity {
     private String profileImage;
     private Integer followerCount;
     private Integer followingCount;
-
-    @OneToMany
-    private List<PostEntity> posts;
 
     public UserEntity(User user) {
         this.id = user.getId();

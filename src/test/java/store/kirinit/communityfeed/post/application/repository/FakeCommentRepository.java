@@ -2,7 +2,6 @@ package store.kirinit.communityfeed.post.application.repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import store.kirinit.communityfeed.post.application.interfaces.CommentRepository;
 import store.kirinit.communityfeed.post.domain.comment.Comment;
 
@@ -23,7 +22,7 @@ public class FakeCommentRepository implements CommentRepository {
     }
 
     @Override
-    public Optional<Comment> findById(Long commentId) {
-        return Optional.ofNullable(store.get(commentId));
+    public Comment findById(Long commentId) {
+        return store.get(commentId);
     }
 }

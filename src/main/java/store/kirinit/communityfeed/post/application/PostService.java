@@ -1,5 +1,6 @@
 package store.kirinit.communityfeed.post.application;
 
+import org.springframework.stereotype.Service;
 import store.kirinit.communityfeed.post.application.dto.CreatePostRequestDto;
 import store.kirinit.communityfeed.post.application.dto.LikeRequestDto;
 import store.kirinit.communityfeed.post.application.dto.UpdatePostRequestDto;
@@ -9,6 +10,7 @@ import store.kirinit.communityfeed.post.domain.Post;
 import store.kirinit.communityfeed.user.application.service.UserService;
 import store.kirinit.communityfeed.user.domain.User;
 
+@Service
 public class PostService {
     private final UserService userService;
     private final PostRepository postRepository;
@@ -21,8 +23,7 @@ public class PostService {
     }
 
     public Post getPost(Long id) {
-        return postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        return postRepository.findById(id);
     }
 
     public Post createPost(CreatePostRequestDto dto) {
@@ -31,8 +32,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(UpdatePostRequestDto dto) {
-        Post post = getPost(dto.postId());
+    public Post updatePost(Long postId, UpdatePostRequestDto dto) {
+        Post post = getPost(postId);
         User user = userService.getUser(dto.userId());
         post.changePost(user, dto.content(), dto.state());
         return postRepository.save(post);
@@ -47,7 +48,6 @@ public class PostService {
         }
         post.like(user);
         likeRepository.like(post, user);
-        postRepository.save(post);
     }
 
     public void unlikePost(LikeRequestDto dto) {

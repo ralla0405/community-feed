@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import store.kirinit.communityfeed.common.domain.PositiveIntegerCounter;
 import store.kirinit.communityfeed.common.repository.entity.TimeBaseEntity;
 import store.kirinit.communityfeed.post.domain.Post;
@@ -41,6 +42,9 @@ public class PostEntity extends TimeBaseEntity {
     private PostState state;
 
     private Integer likeCount;
+
+    @ColumnDefault("0")
+    private int commentCount;
 
     public PostEntity(Post post) {
         this.id = post.getId();
