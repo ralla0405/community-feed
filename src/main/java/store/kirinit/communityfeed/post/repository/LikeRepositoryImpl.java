@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import store.kirinit.communityfeed.post.application.interfaces.LikeRepository;
 import store.kirinit.communityfeed.post.domain.Post;
 import store.kirinit.communityfeed.post.domain.comment.Comment;
-import store.kirinit.communityfeed.post.repository.entity.comment.CommentEntity;
 import store.kirinit.communityfeed.post.repository.entity.like.LikeEntity;
-import store.kirinit.communityfeed.post.repository.entity.post.PostEntity;
 import store.kirinit.communityfeed.post.repository.jpa.JpaCommentRepository;
 import store.kirinit.communityfeed.post.repository.jpa.JpaLikeRepository;
 import store.kirinit.communityfeed.post.repository.jpa.JpaPostRepository;
@@ -39,7 +37,7 @@ public class LikeRepositoryImpl implements LikeRepository {
         LikeEntity likeEntity = new LikeEntity(post, user);
 //        jpaLikeRepository.save(likeEntity); <- 불필요한 조회 쿼리를 줄이기 위해
         entityManager.persist(likeEntity);
-        jpaPostRepository.updateLikeCount(new PostEntity(post));
+        jpaPostRepository.updateLikeCount(post.getId(), 1);
     }
 
     @Override
@@ -47,7 +45,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     public void unlike(Post post, User user) {
         LikeEntity likeEntity = new LikeEntity(post, user);
         jpaLikeRepository.deleteById(likeEntity.getId());
-        jpaPostRepository.updateLikeCount(new PostEntity(post));
+        jpaPostRepository.updateLikeCount(post.getId(), -1);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class LikeRepositoryImpl implements LikeRepository {
         LikeEntity likeEntity = new LikeEntity(comment, user);
 //        jpaLikeRepository.save(likeEntity); <- 불필요한 조회 쿼리를 줄이기 위해
         entityManager.persist(likeEntity);
-        jpaCommentRepository.updateLikeCount(new CommentEntity(comment));
+        jpaCommentRepository.updateLikeCount(comment.getId(), 1);
     }
 
     @Override
@@ -70,6 +68,6 @@ public class LikeRepositoryImpl implements LikeRepository {
     public void unlike(Comment comment, User user) {
         LikeEntity likeEntity = new LikeEntity(comment, user);
         jpaLikeRepository.deleteById(likeEntity.getId());
-        jpaCommentRepository.updateLikeCount(new CommentEntity(comment));
+        jpaCommentRepository.updateLikeCount(comment.getId(), -1);
     }
 }
