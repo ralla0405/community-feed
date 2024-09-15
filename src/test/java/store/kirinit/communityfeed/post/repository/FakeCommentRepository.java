@@ -1,4 +1,4 @@
-package store.kirinit.communityfeed.post.application.repository;
+package store.kirinit.communityfeed.post.repository;
 
 import java.util.HashMap;
 import java.util.Map;

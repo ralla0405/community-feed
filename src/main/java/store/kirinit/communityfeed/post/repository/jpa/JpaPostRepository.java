@@ -8,8 +8,8 @@ import store.kirinit.communityfeed.post.repository.entity.post.PostEntity;
 
 public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
 
-    @Query("SELECT p.id FROM PostEntity p WHERE p.writer.id = :writerId")
-    List<Long> findALlPostIdsByWriterId(Long writerId);
+    @Query("SELECT p FROM PostEntity p WHERE p.writer.id = :writerId")
+    List<PostEntity>  findAllPostByWriterId(Long writerId);
 
     @Modifying
     @Query("UPDATE PostEntity p "
