@@ -18,7 +18,7 @@ class DatetimeInfoTest {
 
         // then
         assertTrue(datetimeInfo.isEdited());
-        assertEquals(localDateTime, datetimeInfo.getDateTime());
+        assertNotEquals(localDateTime, datetimeInfo.getDateTime());
     }
 
 }

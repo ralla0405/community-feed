@@ -24,6 +24,7 @@ public class FeedAcceptanceSteps {
     public static List<GetPostContentResponseDto> requestFeed(Long userId) {
         return RestAssured
             .given().log().all()
+            .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
             .get("/feeds/{userId}", userId)
             .then().log().all()
